@@ -32,7 +32,49 @@ public:
     void save();
     void retrieve();
 };
+void gotoxy(int x, int y);
+void box();
+void smallbox();
 
+void gotoxy(int x,int y){
+    COORD coord = {0,0};
+    coord.X=x;
+    coord.Y=y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+void box(){
+    int i;
+    int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
+    gotoxy(40,5);cout<<(char)ul;
+    gotoxy(90,5);cout<<(char)ur;
+    gotoxy(90,13);cout<<(char)dr;
+    gotoxy(40,13);cout<<(char)dl;
+    for (i=0;i<=6;i++){
+         gotoxy(40,6+i);cout<<(char)l;
+         gotoxy(90,6+i);cout<<(char)l;
+    }
+    for (i=0;i<49;i++){
+        gotoxy(41+i,5);cout<<(char)w;
+        gotoxy(41+i,13);cout<<(char)w;
+    }
+}
+
+void smallbox(){
+    int i;
+    int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
+    gotoxy(33,4);cout<<(char)ul;
+    gotoxy(48,4);cout<<(char)ur;
+    gotoxy(48,10);cout<<(char)dr;
+    gotoxy(33,10);cout<<(char)dl;
+    for(i=0;i<=4;i++){
+        gotoxy(33,5+i);cout<<(char)l;
+        gotoxy(48,5+i);cout<<(char)l;
+    }
+    for (i=0;i<14;i++){
+        gotoxy(34+i,4);cout<<(char)w;
+        gotoxy(34+i,10);cout<<(char)w;
+    }
+}
 void MyClass::init(){
     head=NULL;
 }
