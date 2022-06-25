@@ -6,9 +6,8 @@ by Andrew R. Oloroso and Armand Angelo C. Barrios*/
 #include <windows.h>
 #include <time.h>
 #include <conio.h>
-#define MAX 50
 using namespace std;
-typedef struct playerRec { //self-referecial structre
+typedef struct node { //self-referecial structre
     int plus1,minus1,divide1,multiply1;
     int plus2,minus2,divide2,multiply2;
     int plus3,minus3,divide3,multiply3;
@@ -17,15 +16,18 @@ typedef struct playerRec { //self-referecial structre
     float ave1,ave2,ave3,ave4,ave5;
     string name;
     string pass;
-} SREC; SREC PLAYER [MAX];
+    struct node * next;
+} NODE;
 
 class MyClass {
 private:
-    int items=10,counter,marker,marker2,level,start;
+    NODE *head;
+    int items=10,counter,level,start,operation;
+    string marker;
     char c;
-    int locate(string n);
     void score();
-    void AddRec(SREC pl);
+    void saveScore(int n);
+    void AddRec(NODE *pl);
     void AllLead(); void AllLead2(); void AllLead3(); void AllLead4(); void AllLead5();
     void AddLead(); void AddLead2(); void AddLead3(); void AddLead4(); void AddLead5();
     void SubLead(); void SubLead2(); void SubLead3(); void SubLead4(); void SubLead5();
@@ -52,7 +54,7 @@ void gotoxy(int x,int y){
 }
 
 void MyClass::init(){
-    marker = -1;
+    head=NULL;
 }
 
 void box(){ //box display using ascii value in log in
@@ -89,41 +91,34 @@ void smallbox(){ //box display using ascii value in the problems
 }
 
 void MyClass::logIn(){
-    SREC player;
+    NODE player, *p, *q;
+    p=q=head;
     system("cls"); box();
     gotoxy(45,6);cout<<"Enter Username/UserID: ";getline(cin,player.name); //prompt the user's username/ID
-    int l = locate(player.name); //check if name is already in the list
-    if(l > -1){
-            here: system("cls"); box();
-            gotoxy(45,6);cout<<"Welcome back, "<<player.name<<"!"; //prompt the player's password
-            gotoxy(45,7);cout<<"Enter Password: ";getline(cin,player.pass);
-            //check if password is correct
-            for(int x=0;x<=marker;x++){
-                if (player.pass==PLAYER[x].pass){ //check if in the array structure if correct proceed to next part
-                    gotoxy(45,9);system("pause");marker2=l;break;
-                }else{
-                    gotoxy(45,9);cout<<"Wrong password.";
-                    gotoxy(45,11);system("pause");
-                    goto here; //goto here is responsible to loop if wrong password
-                }
-            }
-        }else{ //will create new account if not in the list
-            marker++;
-            PLAYER[marker].name=player.name;
-            system("cls"); box();
-            gotoxy(45,6);cout<<"A NEW CHALLENGER!";
-            gotoxy(45,7);cout<<"Enter Password: "; //prompt the new player's password
-            getline(cin,PLAYER[marker].pass);
-            gotoxy(45,12);marker2=marker;system("pause");
+    while(p!=NULL && player.name!=p->name){
+        q=p;
+        p=p->next;
+    }if(p==NULL){
+        cout<<"A New Challenger"<<endl;
+        cout<<"Enter Password: ";getline(cin,player.pass);
+        marker=player.name;
+        system("pause");
+    }else{
+        here: system("cls");
+        cout<<"Welcome back "<<player.name<<"!"<<endl;
+        cout<<"Enter Password: ";getline(cin,player.pass);
+        if(player.pass!=p->pass){
+            cout<<"Incorect Password";
+            system("pause");
+            goto here;
+        }else{
+            cout<<"Log in Successful";
+            marker=p->name;
+            system("pause");
         }
+    }
 }
 
-int MyClass::locate(string n){
-    for(int x=0;x<=marker;x++)
-        if (n==PLAYER[x].name)
-            return x;
-    return -1;
-}
 
 void TitleScreen(){
     string game_title[21][98]=
@@ -189,8 +184,7 @@ void MyClass::addition(){
             //generate random numbers from start - level
             y = rand() % level + start;
             z = rand() % level + start;
-            score();
-            smallbox();
+            score(); smallbox();
             for(int i=0;i<7;i++){ //displaying box
                 gotoxy(38+i,7);cout<<(char)ul;
             }
@@ -206,18 +200,7 @@ void MyClass::addition(){
             }
             gotoxy(33,14);system("pause");
         }
-        system("cls");
-        if(level == 10){ //will store the score acording to the level
-            PLAYER[marker2].plus1 = counter;
-        }else if(level == 20){
-            PLAYER[marker2].plus2 = counter;
-        }else if(level == 50){
-            PLAYER[marker2].plus3 = counter;
-        }else if(level == 80){
-            PLAYER[marker2].plus4 = counter;
-        }else if(level == 100){
-            PLAYER[marker2].plus5 = counter;
-        }
+        system("cls"); operation = 1; saveScore(operation);
         gotoxy(40,7);cout<<"Do you want to use this operation again? ";
         gotoxy(45,8);cout<<" [Y] if Yes. [N] if No.";
         c = getch();
@@ -227,9 +210,7 @@ void MyClass::addition(){
             gotoxy(40,11);cout<<" [Y] if Yes. [N] to Exit.";
             c = getch();
             if(c == 'n' || c == 'N'){
-                leaderboard();
-                save();
-                exit(0);
+                leaderboard(); save(); exit(0);
             }
         }
 }
@@ -244,8 +225,7 @@ void MyClass::subtraction(){
             //generate random numbers from start to level
             y = rand() % level + start;
             z = rand() % level + start;
-            score();
-            smallbox();
+            score(); smallbox();
             gotoxy(35,3);cout<<"Problem #" <<x+1;
             for(int i=0;i<7;i++){ //display the box
                 gotoxy(38+i,7);cout<<(char)ul;
@@ -269,18 +249,7 @@ void MyClass::subtraction(){
             }
             gotoxy(33,14);system("pause");
         }
-        system("cls");
-        if(level == 10){ //will store the score acording to the level
-            PLAYER[marker2].minus1 = counter;
-        }else if(level == 20){
-            PLAYER[marker2].minus2 = counter;
-        }else if(level == 50){
-            PLAYER[marker2].minus3 = counter;
-        }else if(level == 80){
-            PLAYER[marker2].minus4 = counter;
-        }else if(level == 100){
-            PLAYER[marker2].minus5 = counter;
-        }
+        system("cls");operation = 2;saveScore(operation);
         gotoxy(40,7);cout<<"Do you want to use this operation again? ";
         gotoxy(45,8);cout<<" [Y] if Yes. [N] if No.";
         c = getch();
@@ -290,9 +259,7 @@ void MyClass::subtraction(){
             gotoxy(40,11);cout<<" [Y] if Yes. [N] to Exit.";
             c = getch();
             if(c == 'n' || c == 'N'){
-                leaderboard();
-                save();
-                exit(0);
+                leaderboard();save();exit(0);
             }
         }
 }
@@ -307,8 +274,7 @@ void MyClass::division(){
             //generate random numbers from start to level
             y = rand() % level + start;
             z = rand() % level + start;
-            score();
-            smallbox();
+            score();smallbox();
             gotoxy(35,3);cout<<"Problem #" <<x+1;
             for(int i=0;i<7;i++){
                 gotoxy(38+i,7);cout<<(char)ul;
@@ -316,7 +282,7 @@ void MyClass::division(){
             temp = y*z; //to have divisible numbers
             y = temp;
             gotoxy(40,5);cout<<"  "<<y;
-            gotoxy(40,6);cout<<(char)s<<" "<<z;
+            gotoxy(40,6);cout<<s<<" "<<z;
             gotoxy(41,8);cin>>answer;
             if(answer == y/z){
                 gotoxy(33,12);cout<<"Correct!";
@@ -326,18 +292,7 @@ void MyClass::division(){
             }
             gotoxy(33,14);system("pause");
         }
-        system("cls");
-        if(level == 10){ //will store the score acording to the level
-            PLAYER[marker2].divide1 = counter;
-        }else if(level == 20){
-            PLAYER[marker2].divide2 = counter;
-        }else if(level == 50){
-            PLAYER[marker2].divide3 = counter;
-        }else if(level == 80){
-            PLAYER[marker2].divide4 = counter;
-        }else if(level == 100){
-            PLAYER[marker2].divide5 = counter;
-        }
+        system("cls");operation = 3;saveScore(operation);
         gotoxy(40,7);cout<<"Do you want to use this operation again? ";
         gotoxy(45,8);cout<<" [Y] if Yes. [N] if No.";
         c = getch();
@@ -347,9 +302,7 @@ void MyClass::division(){
             gotoxy(40,11);cout<<" [Y] if Yes. [N] to Exit.";
             c = getch();
             if(c == 'n' || c == 'N'){
-                leaderboard();
-                save();
-                exit(0);
+                leaderboard();save();exit(0);
             }
         }
 }
@@ -364,8 +317,7 @@ void MyClass::multiplication(){
             //generate random numbers from start to level
             y = rand() % level + start;
             z = rand() % level + start;
-            score();
-            smallbox();
+            score();smallbox();
             gotoxy(35,3);cout<<"Problem #" <<x+1;
             for(int i=0;i<7;i++){
                 gotoxy(38+i,7);cout<<(char)ul;
@@ -381,18 +333,7 @@ void MyClass::multiplication(){
             }
             gotoxy(33,14);system("pause");
         }
-        system("cls");
-        if(level == 10){ //will store the score acording to the level
-            PLAYER[marker2].multiply1 = counter;
-        }else if(level == 20){
-            PLAYER[marker2].multiply2 = counter;
-        }else if(level == 50){
-            PLAYER[marker2].multiply3 = counter;
-        }else if(level == 80){
-            PLAYER[marker2].multiply4 = counter;
-        }else if(level == 100){
-            PLAYER[marker2].multiply5 = counter;
-        }
+        system("cls");operation = 4;saveScore(operation);
         gotoxy(40,7);cout<<"Do you want to use this operation again? ";
         gotoxy(45,8);cout<<" [Y] if Yes. [N] if No.";
         c = getch();
@@ -402,9 +343,7 @@ void MyClass::multiplication(){
             gotoxy(40,11);cout<<" [Y] if Yes. [N] to Exit.";
             c = getch();
             if(c == 'n' || c == 'N'){
-                leaderboard();
-                save();
-                exit(0);
+                leaderboard();save();exit(0);
             }
         }
 }
@@ -434,22 +373,79 @@ void MyClass::GetLevel(){ //assign the value of start and level according to cho
     }
 }
 
+void MyClass::saveScore(int n){
+    NODE *p, *q;
+    p=q=head;
+    while(marker!=p->name){
+        q=p;
+        p=p->next;
+    }
+    switch(n){
+        case 1: if(level == 10){ //will store the score acording to the level
+                    p->plus1 = counter;
+                }else if(level == 20){
+                    p->plus2 = counter;
+                }else if(level == 50){
+                    p->plus3 = counter;
+                }else if(level == 80){
+                    p->plus4 = counter;
+                }else if(level == 100){
+                    p->plus5 = counter;
+                }break;
+        case 2: if(level == 10){ //will store the score acording to the level
+                    p->minus1 = counter;
+                }else if(level == 20){
+                    p->minus2 = counter;
+                }else if(level == 50){
+                    p->minus3 = counter;
+                }else if(level == 80){
+                    p->minus4 = counter;
+                }else if(level == 100){
+                    p->minus5 = counter;
+                }break;
+        case 3: if(level == 10){ //will store the score acording to the level
+                    p->divide1 = counter;
+                }else if(level == 20){
+                    p->divide2 = counter;
+                }else if(level == 50){
+                    p->divide3 = counter;
+                }else if(level == 80){
+                    p->divide4 = counter;
+                }else if(level == 100){
+                    p->divide5 = counter;
+                }break;
+        case 4: if(level == 10){ //will store the score acording to the level
+                    p->multiply1 = counter;
+                }else if(level == 20){
+                    p->multiply2 = counter;
+                }else if(level == 50){
+                    p->multiply3 = counter;
+                }else if(level == 80){
+                    p->multiply4 = counter;
+                }else if(level == 100){
+                    p->multiply5 = counter;
+                }break;
+    }
+}
+
 void MyClass::save(){ //will save the data from array structure to the txt file
     fstream fp;
     fp.open("BSCS-1CD-Leaderboard.txt",ios::out);
-    int x;
-    if (!fp){
-        gotoxy(40,5);cout<<"Error 404. Saved file was not found.";
-        gotoxy(40,10);system("pause");
+    NODE *p;
+    p=head;
+    if(!fp){
+        cout << "File Error"<<endl;
+        system("pause");
     }
     else {
-        for (x=0;x<=marker;x++){
-            fp<<PLAYER[x].name<<endl<<PLAYER[x].pass<<endl
-              <<PLAYER[x].plus1<<" "<<PLAYER[x].minus1<<" "<<PLAYER[x].divide1<<" "<<PLAYER[x].multiply1<<"\t"
-              <<PLAYER[x].plus2<<" "<<PLAYER[x].minus2<<" "<<PLAYER[x].divide2<<" "<<PLAYER[x].multiply2<<"\t"
-              <<PLAYER[x].plus3<<" "<<PLAYER[x].minus3<<" "<<PLAYER[x].divide3<<" "<<PLAYER[x].multiply3<<"\t"
-              <<PLAYER[x].plus4<<" "<<PLAYER[x].minus4<<" "<<PLAYER[x].divide4<<" "<<PLAYER[x].multiply4<<"\t"
-              <<PLAYER[x].plus5<<" "<<PLAYER[x].minus5<<" "<<PLAYER[x].divide5<<" "<<PLAYER[x].multiply5<<endl;
+        while(p!=NULL){
+            fp<<p->name<<endl<<p->pass<<endl
+              <<p->plus1<<" "<<p->minus1<<" "<<p->divide1<<" "<<p->multiply1<<"\t"
+              <<p->plus2<<" "<<p->minus2<<" "<<p->divide2<<" "<<p->multiply2<<"\t"
+              <<p->plus3<<" "<<p->minus3<<" "<<p->divide3<<" "<<p->multiply3<<"\t"
+              <<p->plus4<<" "<<p->minus4<<" "<<p->divide4<<" "<<p->multiply4<<"\t"
+              <<p->plus5<<" "<<p->minus5<<" "<<p->divide5<<" "<<p->multiply5<<endl;
+            p=p->next;
         }
         fp.close();
     }
@@ -458,7 +454,8 @@ void MyClass::save(){ //will save the data from array structure to the txt file
 void MyClass::retrieve(){ //will scan the txt file
     fstream fp;
     fp.open("BSCS-1CD-Leaderboard.txt",ios::in);
-    SREC players;
+    //SREC players;
+    NODE players;
     if (!fp){
         system("cls");
         gotoxy(40,5);cout<<"Error 404.";
@@ -475,7 +472,7 @@ void MyClass::retrieve(){ //will scan the txt file
               >>players.plus5>>players.minus5>>players.divide5>>players.multiply5;
             fp.ignore();
             if (!fp.eof()){
-                AddRec(players);
+                AddRec(&players);
             }else{
                 break;
             }
@@ -484,27 +481,33 @@ void MyClass::retrieve(){ //will scan the txt file
    }
 }
 
-void MyClass::AddRec(SREC pl){
-    //check if array is full
-    if (marker == MAX-1){
-        cout<<"Array is Full";
-        system("\npause");
-    }else{
-        //will add the record from the file to the array structure
-        marker++;
-        PLAYER[marker]=pl;
+void MyClass::AddRec(NODE *pl){
+    NODE *p, *q, *newNode;
+    p=q=head;
+    newNode = new NODE;
+    newNode = pl;
+    while (p!=NULL){
+        q = p;
+        p = p->next;
     }
+    if (head==p){
+        head = newNode;//first element
+    }else{
+        q->next = newNode;
+    }newNode->next = p;
 }
 
 void MyClass::leaderboard(){
-    int i;
     system("cls");
-    for (i=0;i<=marker2;i++){ //assigning the value of average of every player per level
-        PLAYER[i].ave1 = (PLAYER[i].plus1 + PLAYER[i].minus1 + PLAYER[i].divide1 + PLAYER[i].multiply1) / 4.0;
-        PLAYER[i].ave2 = (PLAYER[i].plus2 + PLAYER[i].minus2 + PLAYER[i].divide2 + PLAYER[i].multiply2) / 4.0;
-        PLAYER[i].ave3 = (PLAYER[i].plus3 + PLAYER[i].minus3 + PLAYER[i].divide3 + PLAYER[i].multiply3) / 4.0;
-        PLAYER[i].ave4 = (PLAYER[i].plus4 + PLAYER[i].minus4 + PLAYER[i].divide4 + PLAYER[i].multiply4) / 4.0;
-        PLAYER[i].ave5 = (PLAYER[i].plus5 + PLAYER[i].minus5 + PLAYER[i].divide5 + PLAYER[i].multiply5) / 4.0;
+    NODE *p;
+    p=head;
+    while(p!=NULL){
+        p->ave1 = (p->plus1 + p->minus1 + p->divide1 + p->multiply1) / 4.0;
+        p->ave2 = (p->plus2 + p->minus2 + p->divide2 + p->multiply2) / 4.0;
+        p->ave3 = (p->plus3 + p->minus3 + p->divide3 + p->multiply3) / 4.0;
+        p->ave4 = (p->plus4 + p->minus4 + p->divide4 + p->multiply4) / 4.0;
+        p->ave5 = (p->plus5 + p->minus5 + p->divide5 + p->multiply5) / 4.0;
+        p=p->next;
     }
     gotoxy(44,5);cout<<"LEADERBOARDS";
     gotoxy(34,6);cout<<"Score at least 1 point to qualify";
@@ -543,28 +546,31 @@ void MyClass::leaderboard(){
     system("cls");
 }
 
+void MyClass::sortAll(){
+
+}
+
 void MyClass::AllLead(){
     SREC temp; //teporarily store the value of array structure
     gotoxy(26,8);cout<<"Level 1 Overall Rankings";
     //checking every single player and sort in descending order according to the average
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].ave1 < PLAYER[y+1].ave1){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
+    NODE *p, *q, *temp;
+    p=q=head;
+    while (p!=NULL && ((p->ave1)<(p->next->ave1))){
+        q = p;
+        p = p->next;
     }
+
+
     //will print "DATA UNAVAILABLE" if doesn't have a score yet in every operation
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus1==0||PLAYER[z].minus1==0||PLAYER[z].multiply1==0||PLAYER[z].divide1==0){
-            gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        if(PLAYER[z].plus1==NULL||PLAYER[z].minus1==NULL||PLAYER[z].multiply1==NULL||PLAYER[z].divide1==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
             gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,10+z);cout<<"\t  DATA UNAVAILABLE";
         }
         else{
-        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
         gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave1<<endl;
         }
     }
@@ -584,15 +590,15 @@ void MyClass::AddLead(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus1==0){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
+        if(PLAYER[z].plus1==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
+            gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus1/items*100<<"%"<<endl;
+        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
+        gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
+        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus1/items*100<<"%%"<<endl;
         }
     }
 }
@@ -611,15 +617,15 @@ void MyClass::SubLead(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus1==0){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
+        if(PLAYER[z].minus1==NULL){
+            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
+            gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus1/items*100<<"%"<<endl;
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
+        gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
+        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus1/items*100<<"%%"<<endl;
         }
     }
 }
@@ -638,15 +644,15 @@ void MyClass::DivLead(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide1==0){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
+        if(PLAYER[z].divide1==NULL){
+            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
+            gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide1/items*100<<"%"<<endl;
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
+        gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
+        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide1/items*100<<"%%"<<endl;
         }
     }
 }
@@ -665,15 +671,15 @@ void MyClass::MulLead(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply1==0){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
+        if(PLAYER[z].multiply1==NULL){
+            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
+            gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply1/items*100<<"%"<<endl;
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
+        gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
+        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply1/items*100<<"%%"<<endl;
         }
     }
 }
@@ -691,13 +697,13 @@ void MyClass::AllLead2(){
         }
     }
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus2==0||PLAYER[z].minus2==0||PLAYER[z].multiply2==0||PLAYER[z].divide2==0){
-            gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        if(PLAYER[z].plus2==NULL||PLAYER[z].minus2==NULL||PLAYER[z].multiply2==NULL||PLAYER[z].divide2==NULL){
+            gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
             gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,10+z);cout<<"\t  DATA UNAVAILABLE";
         }
         else{
-        gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
         gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave2;
         }
     }
@@ -717,15 +723,15 @@ void MyClass::AddLead2(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus2==0){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].plus2==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus2/items*100<<"%"<<endl;
+        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus2/items*100<<"%%"<<endl;
         }
     }
 }
@@ -744,15 +750,15 @@ void MyClass::SubLead2(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus2==0){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].minus2==NULL){
+            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus2/items*100<<"%"<<endl;
+        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus2/items*100<<"%%"<<endl;
         }
     }
 }
@@ -771,15 +777,15 @@ void MyClass::DivLead2(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide2==0){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].divide2==NULL){
+            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide2/items*100<<"%"<<endl;
+        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide2/items*100<<"%%"<<endl;
         }
     }
 }
@@ -798,15 +804,15 @@ void MyClass::MulLead2(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply2==0){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].multiply2==NULL){
+            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply2/items*100<<"%"<<endl;
+        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply2/items*100<<"%%"<<endl;
         }
     }
 }
@@ -825,13 +831,13 @@ void MyClass::AllLead3(){
         }
     }
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus3==0||PLAYER[z].minus3==0||PLAYER[z].multiply3==0||PLAYER[z].divide3==0){
-             gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        if(PLAYER[z].plus3==NULL||PLAYER[z].minus3==NULL||PLAYER[z].multiply3==NULL||PLAYER[z].divide3==NULL){
+             gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
             gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,21+z);cout<<"\t  DATA UNAVAILABLE";
         }
         else{
-        gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
         gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave3;
         }
     }
@@ -851,15 +857,15 @@ void MyClass::AddLead3(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus3==0){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].plus3==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus3/items*100<<"%"<<endl;
+        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus3/items*100<<"%%"<<endl;
         }
     }
 }
@@ -878,15 +884,15 @@ void MyClass::SubLead3(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus3==0){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].minus3==NULL){
+            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus3/items*100<<"%"<<endl;
+        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus3/items*100<<"%%"<<endl;
         }
     }
 }
@@ -905,15 +911,15 @@ void MyClass::DivLead3(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide3==0){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].divide3==NULL){
+            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide3/items*100<<"%"<<endl;
+        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide3/items*100<<"%%"<<endl;
         }
     }
 }
@@ -932,15 +938,15 @@ void MyClass::MulLead3(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply3==0){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].multiply3==NULL){
+            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply3/items*100<<"%"<<endl;
+        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply3/items*100<<"%%"<<endl;
         }
     }
 }
@@ -959,13 +965,13 @@ void MyClass::AllLead4(){
         }
     }
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus4==0||PLAYER[z].minus4==0||PLAYER[z].multiply4==0||PLAYER[z].divide4==0){
-            gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        if(PLAYER[z].plus4==NULL||PLAYER[z].minus4==NULL||PLAYER[z].multiply4==NULL||PLAYER[z].divide4==NULL){
+            gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
             gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,21+z);cout<<"\t  DATA UNAVAILABLE";
         }
         else{
-        gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
         gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave4;
         }
     }
@@ -985,15 +991,15 @@ void MyClass::AddLead4(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus4==0){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].plus4==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].plus4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus4/items*100<<"%"<<endl;
+        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].plus4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus4/items*100<<"%%"<<endl;
         }
     }
 }
@@ -1012,15 +1018,15 @@ void MyClass::SubLead4(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus4==0){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].minus4==NULL){
+            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus4/items*100<<"%"<<endl;
+        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus4/items*100<<"%%"<<endl;
         }
     }
 }
@@ -1039,15 +1045,15 @@ void MyClass::DivLead4(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide4==0){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].divide4==NULL){
+            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide4/items*100<<"%"<<endl;
+        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide4/items*100<<"%%"<<endl;
         }
     }
 }
@@ -1066,15 +1072,15 @@ void MyClass::MulLead4(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply4==0){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].multiply4==NULL){
+            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply4/items*100<<"%"<<endl;
+        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply4/items*100<<"%%"<<endl;
         }
     }
 }
@@ -1093,13 +1099,13 @@ void MyClass::AllLead5(){
         }
     }
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus5==0||PLAYER[z].minus5==0||PLAYER[z].multiply5==0||PLAYER[z].divide5==0){
-            gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        if(PLAYER[z].plus5==NULL||PLAYER[z].minus5==NULL||PLAYER[z].multiply5==NULL||PLAYER[z].divide5==NULL){
+            gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
             gotoxy(42,33+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(52,33+z);cout<<"\t  DATA UNAVAILABLE";
         }
         else{
-        gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
         gotoxy(42,33+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave5;
         }
     }
@@ -1119,15 +1125,15 @@ void MyClass::AddLead5(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus5==0){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].plus5==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,10+z);printf("\t  ---");
         }
         else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus5/items*100<<"%"<<endl;
+        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus5/items*100<<"%%"<<endl;
         }
     }
 }
@@ -1146,15 +1152,15 @@ void MyClass::SubLead5(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus5==0){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].minus5==NULL){
+            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus5/items*100<<"%"<<endl;
+        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus5/items*100<<"%%"<<endl;
         }
     }
 }
@@ -1173,15 +1179,15 @@ void MyClass::DivLead5(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide5==0){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].divide5==NULL){
+            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide5/items*100<<"%"<<endl;
+        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide5/items*100<<"%%"<<endl;
         }
     }
 }
@@ -1200,15 +1206,15 @@ void MyClass::MulLead5(){
     }
     //will print "---" if new player and display score if old player
     for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply5==0){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        if(PLAYER[z].multiply5==NULL){
+            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
             gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }
         else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
         gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply5/items*100<<"%"<<endl;
+        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply5/items*100<<"%%"<<endl;
         }
     }
 }
