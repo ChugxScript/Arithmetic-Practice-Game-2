@@ -101,7 +101,9 @@ void MyClass::logIn(){
         q=p;
         p=p->next;
     }if(p==NULL){
-        gotoxy(45,6);cout<<"A New Challenger"<<endl;
+        system("cls");
+        box();
+        gotoxy(45,6);cout<<"A NEW CHALLENGER!"<<endl;
         gotoxy(45,7);cout<<"Enter Password: ";getline(cin,player.pass);
         AddPlayer(player);
         marker=player.name;
@@ -111,13 +113,14 @@ void MyClass::logIn(){
         gotoxy(45,6);cout<<"Welcome back "<<player.name<<"!"<<endl;
         gotoxy(45,7);cout<<"Enter Password: ";getline(cin,player.pass);
         if(player.pass!=p->pass){
-            gotoxy(45,9);cout<<"Incorect Password";
+            gotoxy(45,9);cout<<"Incorrect Password";
             gotoxy(45,11);system("pause");
             goto here;
         }else{
-            gotoxy(45,9);cout<<"Log in Successful";
-            marker=p->name;
+            gotoxy(45,9);cout<<"Log in was successful!";
             gotoxy(45,11);system("pause");
+            marker=p->name;
+
         }
     }
 }
@@ -129,8 +132,8 @@ void MyClass::AddPlayer(NODE player){
     player.plus4=0;player.minus4=0;player.divide4=0;player.multiply4=0;
     player.plus5=0;player.minus5=0;player.divide5=0;player.multiply5=0;
     AddRec(&player);
-    cout<<"Log in Successful";
-    system("pause");
+    gotoxy(45,9);cout<<"Log in was successful!";
+    gotoxy(45,11);system("pause");
 }
 
 void MyClass::AddRec(NODE *pl){
@@ -378,7 +381,7 @@ void MyClass::multiplication(){
 }
 
 void MyClass::score(){ //display updated score
-    gotoxy(90,2);cout<<"Score: "<<counter<<"/"<<items<<":"<<fixed<<setprecision(2)<<(float)counter/items*100;
+    gotoxy(90,2);cout<<"Score: "<<counter<<"/"<<items<<":"<<fixed<<setprecision(2)<<(float)counter/items*100<<"%";
 }
 
 void MyClass::GetLevel(){ //assign the value of start and level according to chosen difficulty
@@ -493,7 +496,8 @@ void MyClass::retrieve(){ //will scan the txt file
     }
     else {
         while(true){
-            getline(fp,players.name); getline(fp,players.pass);
+            getline(fp,players.name);
+            getline(fp,players.pass);
             fp>>players.plus1>>players.minus1>>players.divide1>>players.multiply1
               >>players.plus2>>players.minus2>>players.divide2>>players.multiply2
               >>players.plus3>>players.minus3>>players.divide3>>players.multiply3
@@ -753,12 +757,12 @@ void MyClass::AddLead(){
     while(lead!=NULL){
         if(lead->plus1==0){
             gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->plus1/(float)items)*100;
         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
         gotoxy(25,10+z);cout<<"\t"<<lead->plus1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
@@ -788,12 +792,12 @@ void MyClass::AddLead2(){
     while(lead!=NULL){
         if(lead->plus2==0){
             gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->plus2/(float)items)*100;
         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
         gotoxy(25,10+z);cout<<"\t"<<lead->plus2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
@@ -823,12 +827,12 @@ void MyClass::AddLead3(){
     while(lead!=NULL){
         if(lead->plus3==0){
             gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->plus3/(float)items)*100;
         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
         gotoxy(25,10+z);cout<<"\t"<<lead->plus3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
@@ -858,12 +862,12 @@ void MyClass::AddLead4(){
     while(lead!=NULL){
         if(lead->plus4==0){
             gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->plus4/(float)items)*100;
         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
         gotoxy(25,10+z);cout<<"\t"<<lead->plus4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
@@ -893,12 +897,12 @@ void MyClass::AddLead5(){
     while(lead!=NULL){
         if(lead->plus5==0){
             gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->plus5/(float)items)*100;
         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
         gotoxy(25,10+z);cout<<"\t"<<lead->plus5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
@@ -928,13 +932,13 @@ void MyClass::SubLead(){
     while(lead!=NULL){
         if(lead->minus1==0){
             gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->minus1/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->minus1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,10+z);cout<<"\t"<<lead->minus1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -963,13 +967,13 @@ void MyClass::SubLead2(){
     while(lead!=NULL){
         if(lead->minus2==0){
             gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->minus2/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->minus2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,10+z);cout<<"\t"<<lead->minus2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -998,13 +1002,13 @@ void MyClass::SubLead3(){
     while(lead!=NULL){
         if(lead->minus3==0){
             gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,10+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->minus3/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->minus3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,10+z);cout<<"\t"<<lead->minus3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1033,13 +1037,13 @@ void MyClass::SubLead4(){
     while(lead!=NULL){
         if(lead->minus4==0){
             gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,10+z);cout<<"\t  ---";
          }else{
         float p1 = (lead->minus4/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->minus4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,10+z);cout<<"\t"<<lead->minus4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1068,13 +1072,13 @@ void MyClass::SubLead5(){
     while(lead!=NULL){
         if(lead->minus5==0){
             gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,10+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,10+z);cout<<"\t  ---";
          }else{
         float p1 = (lead->minus5/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->minus5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,10+z);cout<<"\t"<<lead->minus5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1103,13 +1107,13 @@ void MyClass::DivLead(){
     while(lead!=NULL){
         if(lead->divide1==0){
             gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,21+z);cout<<"\t  ---";
          }else{
         float p1 = (lead->divide1/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->divide1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,21+z);cout<<"\t"<<lead->divide1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1138,13 +1142,13 @@ void MyClass::DivLead2(){
     while(lead!=NULL){
         if(lead->divide2==0){
             gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->divide2/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->divide2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,21+z);cout<<"\t"<<lead->divide2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1173,13 +1177,13 @@ void MyClass::DivLead3(){
     while(lead!=NULL){
         if(lead->divide3==0){
             gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->divide3/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->divide3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,21+z);cout<<"\t"<<lead->divide3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1208,13 +1212,13 @@ void MyClass::DivLead4(){
     while(lead!=NULL){
         if(lead->divide4==0){
             gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->divide4/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->divide4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,21+z);cout<<"\t"<<lead->divide4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1243,13 +1247,13 @@ void MyClass::DivLead5(){
     while(lead!=NULL){
         if(lead->divide5==0){
             gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(57,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(65,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->divide5/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->divide5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(65,21+z);cout<<"\t"<<lead->divide5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1278,13 +1282,13 @@ void MyClass::MulLead(){
     while(lead!=NULL){
         if(lead->multiply1==0){
             gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->multiply1/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->multiply1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(25,21+z);cout<<"\t"<<lead->multiply1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1313,13 +1317,13 @@ void MyClass::MulLead2(){
     while(lead!=NULL){
         if(lead->multiply2==0){
             gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->multiply2/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->multiply2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(25,21+z);cout<<"\t"<<lead->multiply2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1349,13 +1353,13 @@ void MyClass::MulLead3(){
     while(lead!=NULL){
         if(lead->multiply3==0){
             gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->multiply3/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->multiply3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(25,21+z);cout<<"\t"<<lead->multiply3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1384,13 +1388,13 @@ void MyClass::MulLead4(){
     while(lead!=NULL){
         if(lead->multiply4==0){
             gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->multiply4/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->multiply4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(25,21+z);cout<<"\t"<<lead->multiply4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
@@ -1419,13 +1423,13 @@ void MyClass::MulLead5(){
     while(lead!=NULL){
         if(lead->multiply5==0){
             gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
-            gotoxy(17,21+z);cout<<z+1<<".   "<<lead->name;
+            gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,21+z);cout<<"\t  ---";
         }else{
         float p1 = (lead->multiply5/(float)items)*100;
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
-        gotoxy(25,10+z);cout<<"\t"<<lead->multiply5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+        gotoxy(25,21+z);cout<<"\t"<<lead->multiply5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
         z++;lead=lead->next;
     }
