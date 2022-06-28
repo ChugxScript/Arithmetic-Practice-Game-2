@@ -21,13 +21,12 @@ typedef struct node { //self-referecial structre
 
 class MyClass {
 private:
-    NODE *head;
+    NODE *head, *lead;
     int items=10,counter,level,start,operation;
     string marker;
     char c;
     void score();
     void saveScore(int n);
-    void AddRec(NODE *pl);
     void AllLead(); void AllLead2(); void AllLead3(); void AllLead4(); void AllLead5();
     void AddLead(); void AddLead2(); void AddLead3(); void AddLead4(); void AddLead5();
     void SubLead(); void SubLead2(); void SubLead3(); void SubLead4(); void SubLead5();
@@ -36,6 +35,8 @@ private:
 public:
     void init();
     void logIn();
+    void AddPlayer(NODE player);
+    void AddRec(NODE *pl);
     void leaderboard();
     void addition();
     void subtraction();
@@ -55,6 +56,7 @@ void gotoxy(int x,int y){
 
 void MyClass::init(){
     head=NULL;
+    lead=NULL;
 }
 
 void box(){ //box display using ascii value in log in
@@ -101,8 +103,8 @@ void MyClass::logIn(){
     }if(p==NULL){
         cout<<"A New Challenger"<<endl;
         cout<<"Enter Password: ";getline(cin,player.pass);
+        AddPlayer(player);
         marker=player.name;
-        system("pause");
     }else{
         here: system("cls");
         cout<<"Welcome back "<<player.name<<"!"<<endl;
@@ -119,6 +121,32 @@ void MyClass::logIn(){
     }
 }
 
+void MyClass::AddPlayer(NODE player){
+    player.plus1=0;player.minus1=0;player.divide1=0;player.multiply1=0;
+    player.plus2=0;player.minus2=0;player.divide2=0;player.multiply2=0;
+    player.plus3=0;player.minus3=0;player.divide3=0;player.multiply3=0;
+    player.plus4=0;player.minus4=0;player.divide4=0;player.multiply4=0;
+    player.plus5=0;player.minus5=0;player.divide5=0;player.multiply5=0;
+    AddRec(&player);
+    cout<<"Log in Successful";
+    system("pause");
+}
+
+void MyClass::AddRec(NODE *pl){
+    NODE *p, *q, *newNode;
+    p=q=head;
+    newNode = new NODE;
+    *newNode = *pl;
+    while (p!=NULL){
+        q = p;
+        p = p->next;
+    }
+    if (head==p){
+        head = newNode;
+    }else{
+        q->next = newNode;
+    }newNode->next = p;
+}
 
 void TitleScreen(){
     string game_title[21][98]=
@@ -481,28 +509,12 @@ void MyClass::retrieve(){ //will scan the txt file
    }
 }
 
-void MyClass::AddRec(NODE *pl){
-    NODE *p, *q, *newNode;
-    p=q=head;
-    newNode = new NODE;
-    newNode = pl;
-    while (p!=NULL){
-        q = p;
-        p = p->next;
-    }
-    if (head==p){
-        head = newNode;//first element
-    }else{
-        q->next = newNode;
-    }newNode->next = p;
-}
-
 void MyClass::leaderboard(){
     system("cls");
     NODE *p;
     p=head;
     while(p!=NULL){
-        p->ave1 = (p->plus1 + p->minus1 + p->divide1 + p->multiply1) / 4.0;
+        float ave1 = (p->plus1 + p->minus1 + p->divide1 + p->multiply1) / 4.0;
         p->ave2 = (p->plus2 + p->minus2 + p->divide2 + p->multiply2) / 4.0;
         p->ave3 = (p->plus3 + p->minus3 + p->divide3 + p->multiply3) / 4.0;
         p->ave4 = (p->plus4 + p->minus4 + p->divide4 + p->multiply4) / 4.0;
@@ -514,7 +526,7 @@ void MyClass::leaderboard(){
     gotoxy(47,7);cout<<"Level 1";
     AddLead(); SubLead(); DivLead(); MulLead();
     cout<<endl<<endl<<"\t\t\t\t\t";system("pause");
-    system("cls");
+    /*system("cls");
     gotoxy(44,5);cout<<"LEADERBOARDS";
     gotoxy(34,6);cout<<"Score at least 1 point to qualify";
     gotoxy(47,7);cout<<"Level 2";
@@ -537,687 +549,187 @@ void MyClass::leaderboard(){
     gotoxy(34,6);cout<<"Score at least 1 point to qualify";
     gotoxy(47,7);cout<<"Level 5";
     AddLead5(); SubLead5(); DivLead5(); MulLead5();
-    cout<<endl<<endl<<"\t\t\t\t\t";system("pause");
+    cout<<endl<<endl<<"\t\t\t\t\t";system("pause");*/
     system("cls");
     gotoxy(44,5);cout<<"LEADERBOARDS";
     gotoxy(34,6);cout<<"Score at least 1 point to qualify";
-    AllLead(); AllLead2(); AllLead3(); AllLead4(); AllLead5();
+    AllLead(); /*AllLead2(); AllLead3(); AllLead4(); AllLead5();*/
     cout<<endl<<endl<<"\t\t\t\t\t";system("pause");
     system("cls");
 }
 
-void MyClass::sortAll(){
-
-}
-
 void MyClass::AllLead(){
-    SREC temp; //teporarily store the value of array structure
+    int z=0;
+    NODE *p, *q, *temp, *newNode;
+    p=q=lead;
+    temp=head;
+    newNode = new NODE;
+    newNode = temp;
     gotoxy(26,8);cout<<"Level 1 Overall Rankings";
     //checking every single player and sort in descending order according to the average
-    NODE *p, *q, *temp;
-    p=q=head;
-    while (p!=NULL && ((p->ave1)<(p->next->ave1))){
-        q = p;
-        p = p->next;
-    }
-
+    do{
+        while (p!=NULL && p->ave1 < temp->ave1){
+            q = p;
+            p = p->next;
+        }if (p==lead){
+            lead = newNode;
+        }else{
+            q->next = newNode;
+        }newNode->next=p;
+        temp=temp->next;
+    }while(temp!=NULL);
 
     //will print "DATA UNAVAILABLE" if doesn't have a score yet in every operation
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus1==NULL||PLAYER[z].minus1==NULL||PLAYER[z].multiply1==NULL||PLAYER[z].divide1==NULL){
-            gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-            gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
+    while(lead!=NULL){
+        if(lead->plus1==NULL||lead->minus1==NULL||lead->multiply1==NULL||lead->divide1==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+            gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
             gotoxy(25,10+z);cout<<"\t  DATA UNAVAILABLE";
+        }else{
+        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave1<<endl;
         }
-        else{
-        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-        gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave1<<endl;
-        }
+        z++;lead=lead->next;
     }
 }
 void MyClass::AddLead(){
-    SREC temp; //teporarily store the value of array structure
+    int z=0;
+    NODE *p, *q, *temp, *newNode;
+    p=q=lead;
+    temp=head;
+    newNode = new NODE;
+    newNode = temp;
     gotoxy(26,8);cout<<"Addition";
     //checking every single player and sort in descending order according to the addition score
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].plus1 < PLAYER[y+1].plus1){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
+    do{
+        while (p!=NULL && p->plus1 < temp->plus1){
+            q = p;
+            p = p->next;
+        }if (p==lead){
+            lead = newNode;
+        }else{
+            q->next = newNode;
+        }newNode->next=p;
+        temp=temp->next;
+    }while(temp!=NULL);
     //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus1==NULL){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
+    while(lead!=NULL){
+        if(lead->plus1==NULL){
+            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+            gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
             gotoxy(25,10+z);cout<<"\t  ---";
+        }else{
+        float p1 = (lead->plus1/(float)items)*100;
+        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(17,10+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(25,10+z);cout<<"\t"<<lead->plus1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
         }
-        else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus1/items*100<<"%%"<<endl;
-        }
+        z++;lead=lead->next;
     }
 }
 void MyClass::SubLead(){
-    SREC temp; //teporarily store the value of array structure
+    int z=0;
+    NODE *p, *q, *temp, *newNode;
+    p=q=lead;
+    temp=head;
+    newNode = new NODE;
+    newNode = temp;
     gotoxy(66,8);cout<<"Subtraction";
     //checking every single player and sort in descending order according to the subtraction score
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].minus1 < PLAYER[y+1].minus1){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
+    do{
+        while (p!=NULL && p->minus1 < temp->minus1){
+            q = p;
+            p = p->next;
+        }if (p==lead){
+            lead = newNode;
+        }else{
+            q->next = newNode;
+        }newNode->next=p;
+        temp=temp->next;
+    }while(temp!=NULL);
     //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus1==NULL){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
+    while(lead!=NULL){
+        if(lead->minus1==NULL){
+            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+            gotoxy(57,10+z);cout<<z+1<<".   "<<lead->name;
             gotoxy(65,10+z);cout<<"\t  ---";
+        }else{
+        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(67,10+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(65,10+z);cout<<"\t  "<<lead->minus1<<" "<<fixed<<setprecision(2)<<(float)lead->minus1/items*100<<"%"<<endl;
         }
-        else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus1/items*100<<"%%"<<endl;
-        }
+        z++;lead=lead->next;
     }
 }
 void MyClass::DivLead(){
-    SREC temp; //teporarily store the value of array structure
+    int z=0;
+    NODE *p, *q, *temp, *newNode;
+    p=q=lead;
+    temp=head;
+    newNode = new NODE;
+    newNode = temp;
     gotoxy(66,19);cout<<"Division";
     //checking every single player and sort in descending order according to the division score
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].divide1 < PLAYER[y+1].divide1){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
+    do{
+        while (p!=NULL && p->divide1 < temp->divide1){
+            q = p;
+            p = p->next;
+        }if (p==lead){
+            lead = newNode;
+        }else{
+            q->next = newNode;
+        }newNode->next=p;
+        temp=temp->next;
+    }while(temp!=NULL);
     //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide1==NULL){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
+    while(lead!=NULL){
+        if(lead->divide1==NULL){
+            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+            gotoxy(57,21+z);cout<<z+1<<".   "<<lead->name;
             gotoxy(65,21+z);cout<<"\t  ---";
+        }else{
+        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(57,21+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(65,21+z);cout<<"\t  "<<lead->divide1<<" "<<fixed<<setprecision(2)<<(float)lead->divide1/items*100<<"%"<<endl;
         }
-        else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide1/items*100<<"%%"<<endl;
-        }
+        z++;lead=lead->next;
     }
 }
 void MyClass::MulLead(){
-    SREC temp; //teporarily store the value of array structure
+    int z=0;
+    NODE *p, *q, *temp, *newNode;
+    p=q=lead;
+    temp=head;
+    newNode = new NODE;
+    newNode = temp;
     gotoxy(23,19);cout<<"Multiplication";
     //checking every single player and sort in descending order according to the multiplication score
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].multiply1 < PLAYER[y+1].multiply1){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
+    do{
+        while (p!=NULL && p->multiply1 < temp->multiply1){
+            q = p;
+            p = p->next;
+        }if (p==lead){
+            lead = newNode;
+        }else{
+            q->next = newNode;
+        }newNode->next=p;
+        temp=temp->next;
+    }while(temp!=NULL);
     //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply1==NULL){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
+    while(lead!=NULL){
+        if(lead->multiply1==NULL){
+            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+            gotoxy(17,21+z);cout<<z+1<<".   "<<lead->name;
             gotoxy(25,21+z);cout<<"\t  ---";
+        }else{
+        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+        gotoxy(17,21+z);cout<<z+1<<".   "<<lead->name;
+        gotoxy(25,21+z);cout<<"\t  "<<lead->multiply1<<" "<<fixed<<setprecision(2)<<(float)lead->multiply1/items*100<<"%"<<endl;
         }
-        else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply1<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply1/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::AllLead2(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,8);cout<<"Level 2 Overall Rankings";
-    //checking every single player and sort in descending order according to the average in level 2
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].ave2 < PLAYER[y+1].ave2){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus2==NULL||PLAYER[z].minus2==NULL||PLAYER[z].multiply2==NULL||PLAYER[z].divide2==NULL){
-            gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-            gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,10+z);cout<<"\t  DATA UNAVAILABLE";
-        }
-        else{
-        gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-        gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave2;
-        }
-    }
-}
-void MyClass::AddLead2(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(26,8);cout<<"Addition";
-    //checking every single player and sort in descending order according to the addition score in level 2
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].plus2 < PLAYER[y+1].plus2){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus2==NULL){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,10+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus2/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::SubLead2(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,8);cout<<"Subtraction";
-    //checking every single player and sort in descending order according to the subtraction score in level  2
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].minus2 < PLAYER[y+1].minus2){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus2==NULL){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,10+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus2/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::DivLead2(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,19);cout<<"Division";
-    //checking every single player and sort in descending order according to the division score in level 2
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].divide2 < PLAYER[y+1].divide2){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide2==NULL){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide2/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::MulLead2(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(23,19);cout<<"Multiplication";
-    //checking every single player and sort in descending order according to the multiplication score in level 2
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].multiply2 < PLAYER[y+1].multiply2){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply2==NULL){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply2<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply2/items*100<<"%%"<<endl;
-        }
+        z++;lead=lead->next;
     }
 }
 
-void MyClass::AllLead3(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(23,19);cout<<"Level 3 Overall Rankings";
-    //checking every single player and sort in descending order according to the average in level 3
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].ave3 < PLAYER[y+1].ave3){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus3==NULL||PLAYER[z].minus3==NULL||PLAYER[z].multiply3==NULL||PLAYER[z].divide3==NULL){
-             gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-            gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,21+z);cout<<"\t  DATA UNAVAILABLE";
-        }
-        else{
-        gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-        gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave3;
-        }
-    }
-}
-void MyClass::AddLead3(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(26,8);cout<<"Addition";
-    //checking every single player and sort in descending order according to the addition score in level 3
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].plus3 < PLAYER[y+1].plus3){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus3==NULL){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,10+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus3/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::SubLead3(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,8);cout<<"Subtraction";
-    //checking every single player and sort in descending order according to the subtraction score in level 3
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].minus3 < PLAYER[y+1].minus3){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus3==NULL){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,10+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,10+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus3/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::DivLead3(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,19);cout<<"Division";
-    //checking every single player and sort in descending order according to the division score in level 3
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].divide3 < PLAYER[y+1].divide3){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide3==NULL){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide3/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::MulLead3(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(23,19);cout<<"Multiplication";
-    //checking every single player and sort in descending order according to the multiplication score in level 3
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].multiply3 < PLAYER[y+1].multiply3){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply3==NULL){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,21+z);cout<<z+1<<".   "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply3<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply3/items*100<<"%%"<<endl;
-        }
-    }
-}
-
-void MyClass::AllLead4(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,19);cout<<"Level 4 Overall Rankings";
-    //checking every single player and sort in descending order according to the average in level 4
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].ave4 < PLAYER[y+1].ave4){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus4==NULL||PLAYER[z].minus4==NULL||PLAYER[z].multiply4==NULL||PLAYER[z].divide4==NULL){
-            gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-            gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,21+z);cout<<"\t  DATA UNAVAILABLE";
-        }
-        else{
-        gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-        gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave4;
-        }
-    }
-}
-void MyClass::AddLead4(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(26,8);cout<<"Addition";
-    //checking every single player and sort in descending order according to the addition score in level 4
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].plus4 < PLAYER[y+1].plus4){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus4==NULL){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,10+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].plus4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus4/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::SubLead4(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,8);cout<<"Subtraction";
-    //checking every single player and sort in descending order according to the subtraction score in level 4
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].minus4 < PLAYER[y+1].minus4){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus4==NULL){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,10+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus4/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::DivLead4(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,19);cout<<"Division";
-    //checking every single player and sort in descending order according to the division score in level 4
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].divide4 < PLAYER[y+1].divide4){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide4==NULL){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide4/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::MulLead4(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(23,19);cout<<"Multiplication";
-    //checking every single player and sort in descending order according to the multiplication score in level 4
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].multiply4 < PLAYER[y+1].multiply4){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply4==NULL){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply4<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply4/items*100<<"%%"<<endl;
-        }
-    }
-}
-
-void MyClass::AllLead5(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(48,31);cout<<"Level 5 Overall Rankings";
-    //checking every single player and sort in descending order according to the average in level 5
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].ave5 < PLAYER[y+1].ave5){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus5==NULL||PLAYER[z].minus5==NULL||PLAYER[z].multiply5==NULL||PLAYER[z].divide5==NULL){
-            gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-            gotoxy(42,33+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(52,33+z);cout<<"\t  DATA UNAVAILABLE";
-        }
-        else{
-        gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%%)";
-        gotoxy(42,33+z);cout<<z+1<<".  "<<PLAYER[z].name<<"\t      "<<fixed<<setprecision(2)<<PLAYER[z].ave5;
-        }
-    }
-}
-void MyClass::AddLead5(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(26,8);cout<<"Addition";
-    //checking every single player and sort in descending order according to the addition score in level 5
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].plus5 < PLAYER[y+1].plus5){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].plus5==NULL){
-            gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,10+z);printf("\t  ---");
-        }
-        else{
-        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,10+z);cout<<"\t  "<<PLAYER[z].plus5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].plus5/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::SubLead5(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,8);cout<<"Subtraction";
-    //checking every single player and sort in descending order according to the subtraction score in level 5
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].minus5 < PLAYER[y+1].minus5){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].minus5==NULL){
-            gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,10+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,10+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,10+z);cout<<"\t  "<<PLAYER[z].minus5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].minus5/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::DivLead5(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(66,19);cout<<"Division";
-    //checking every single player and sort in descending order according to the division score in level 5
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].divide5 < PLAYER[y+1].divide5){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].divide5==NULL){
-            gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(65,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(57,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(65,21+z);cout<<"\t  "<<PLAYER[z].divide5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].divide5/items*100<<"%%"<<endl;
-        }
-    }
-}
-void MyClass::MulLead5(){
-    SREC temp; //teporarily store the value of array structure
-    gotoxy(23,19);cout<<"Multiplication";
-    //checking every single player and sort in descending order according to the multiplication score in level 5
-    for(int x=0;x<=marker2;x++){
-        for(int y=0;y<marker2;y++){
-            if (PLAYER[y].multiply5 < PLAYER[y+1].multiply5){
-            temp = PLAYER[y];
-            PLAYER[y] = PLAYER[y+1];
-            PLAYER[y+1] = temp;
-            }
-        }
-    }
-    //will print "---" if new player and display score if old player
-    for(int z=0;z<=marker2;z++){
-        if(PLAYER[z].multiply5==NULL){
-            gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-            gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-            gotoxy(25,21+z);cout<<"\t  ---";
-        }
-        else{
-        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%%)";
-        gotoxy(17,21+z);cout<<z+1<<".  "<<PLAYER[z].name;
-        gotoxy(25,21+z);cout<<"\t  "<<PLAYER[z].multiply5<<" "<<fixed<<setprecision(2)<<(float)PLAYER[z].multiply5/items*100<<"%%"<<endl;
-        }
-    }
-}
 
 int main(){
     MyClass obj;//Object
