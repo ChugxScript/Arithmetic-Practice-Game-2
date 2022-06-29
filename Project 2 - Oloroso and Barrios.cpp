@@ -573,7 +573,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 2: while (p!=NULL && p->minus1 < temp->minus1){
+        case 2: while (p!=NULL && t->minus1 < p->minus1){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -581,7 +581,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 3: while (p!=NULL && p->divide1 < temp->divide1){
+        case 3: while (p!=NULL && t->divide1 < p->divide1){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -589,7 +589,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 4: while (p!=NULL && p->multiply1 < temp->multiply1){
+        case 4: while (p!=NULL && t->multiply1 < p->multiply1){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -597,7 +597,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 5: while (p!=NULL && p->plus2 < temp->plus2){
+        case 5: while (p!=NULL && t->plus2 < p->plus2){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -605,7 +605,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 6: while (p!=NULL && p->minus2 < temp->minus2){
+        case 6: while (p!=NULL && t->minus2 < p->minus2){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -613,7 +613,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 7: while (p!=NULL && p->divide2 < temp->divide2){
+        case 7: while (p!=NULL && t->divide2 < p->divide2){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -621,7 +621,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 8: while (p!=NULL && p->multiply2 < temp->multiply2){
+        case 8: while (p!=NULL && t->multiply2 < p->multiply2){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -629,7 +629,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 9: while (p!=NULL && p->plus3 < temp->plus3){
+        case 9: while (p!=NULL && t->plus3 < p->plus3){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -637,7 +637,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 10: while (p!=NULL && p->minus3 < temp->minus3){
+        case 10: while (p!=NULL && t->minus3 < p->minus3){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -645,7 +645,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 11: while (p!=NULL && p->divide3 < temp->divide3){
+        case 11: while (p!=NULL && t->divide3 < p->divide3){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -653,7 +653,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;
-        case 12: while (p!=NULL && p->multiply3 < temp->multiply3){
+        case 12: while (p!=NULL && t->multiply3 < p->multiply3){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -661,7 +661,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 13: while (p!=NULL && p->plus4 < temp->plus4){
+        case 13: while (p!=NULL && t->plus4 < p->plus4){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -669,7 +669,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 14: while (p!=NULL && p->minus4 < temp->minus4){
+        case 14: while (p!=NULL && t->minus4 < p->minus4){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -677,7 +677,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 15: while (p!=NULL && p->divide4 < temp->divide4){
+        case 15: while (p!=NULL && t->divide4 < p->divide4){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -685,7 +685,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 16: while (p!=NULL && p->multiply4 < temp->multiply4){
+        case 16: while (p!=NULL && t->multiply4 < p->multiply4){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -693,7 +693,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 17:while (p!=NULL && p->plus5 < temp->plus5){
+        case 17:while (p!=NULL && t->plus5 < p->plus5){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -701,7 +701,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 18:while (p!=NULL && p->minus5 < temp->minus5){
+        case 18:while (p!=NULL && t->minus5 < p->minus5){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -709,7 +709,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 19:while (p!=NULL && p->divide5 < temp->divide5){
+        case 19:while (p!=NULL && t->divide5 < p->divide5){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -717,7 +717,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 20:while (p!=NULL && p->multiply5 < temp->multiply5){
+        case 20:while (p!=NULL && t->multiply5 < p->multiply5){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -725,7 +725,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 21:while (p!=NULL && p->ave1 < temp->ave1){
+        case 21:while (p!=NULL && t->ave1 < p->ave1){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -733,7 +733,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 22:while (p!=NULL && p->ave2 < temp->ave2){
+        case 22:while (p!=NULL && t->ave2 < p->ave2){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -741,7 +741,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 23:while (p!=NULL && p->ave3 < temp->ave3){
+        case 23:while (p!=NULL && t->ave3 < p->ave3){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -749,7 +749,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 24:while (p!=NULL && p->ave4 < temp->ave4){
+        case 24:while (p!=NULL && t->ave4 < p->ave4){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -757,7 +757,7 @@ void MyClass::allSort(NODE *t,int x){
                 }else{
                     q->next = newNode;
                 }newNode->next=p;break;
-        case 25:while (p!=NULL && p->ave5 < temp->ave5){
+        case 25:while (p!=NULL && t->ave5 < p->ave5){
                     q = p;
                     p = p->next;
                 }if (p==lead){
@@ -772,7 +772,7 @@ void MyClass::allDisplay(int x){
     //will print "---" if new player and display score if old player
     switch(x){
         case 1: while(lead!=NULL){
-                    if(lead->plus1==NULL){
+                    if(lead->plus1==0){
                         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
                         gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(25,10+z);cout<<"\t  ---";
@@ -784,7 +784,7 @@ void MyClass::allDisplay(int x){
                     }z++;lead=lead->next;
                 }break;
         case 2:while(lead!=NULL){
-                    if(lead->minus1==NULL){
+                    if(lead->minus1==0){
                         gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
                         gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(65,10+z);cout<<"\t  ---";
@@ -796,31 +796,31 @@ void MyClass::allDisplay(int x){
                     z++;lead=lead->next;
                 }break;
         case 3:while(lead!=NULL){
-                    if(lead->divide1==NULL){
-                        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(65,10+z);cout<<"\t  ---";
+                    if(lead->divide1==0){
+                        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,21+z);cout<<"\t  ---";
                     }else{
-                    gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(65,10+z);cout<<"\t"<<lead->divide1<<" ("<<fixed<<setprecision(2)<<(float)lead->divide1/items*100<<"%)"<<endl;
+                    gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,21+z);cout<<"\t"<<lead->divide1<<" ("<<fixed<<setprecision(2)<<(float)lead->divide1/items*100<<"%)"<<endl;
                     }
                     z++;lead=lead->next;
                 }break;
         case 4:while(lead!=NULL){
-                    if(lead->multiply1==NULL){
-                        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(65,10+z);cout<<"\t  ---";
+                    if(lead->multiply1==0){
+                        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(25,21+z);cout<<"\t  ---";
                     }else{
-                    gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(65,10+z);cout<<"\t"<<lead->multiply1<<" ("<<fixed<<setprecision(2)<<(float)lead->multiply1/items*100<<"%)"<<endl;
+                    gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(25,21+z);cout<<"\t"<<lead->multiply1<<" ("<<fixed<<setprecision(2)<<(float)lead->multiply1/items*100<<"%)"<<endl;
                     }
                     z++;lead=lead->next;
                 }break;
         case 5:while(lead!=NULL){
-                    if(lead->plus2==NULL){
+                    if(lead->plus2==0){
                         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
                         gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(25,10+z);cout<<"\t  ---";
@@ -832,43 +832,43 @@ void MyClass::allDisplay(int x){
                     }z++;lead=lead->next;
                 }break;
         case 6:while(lead!=NULL){
-                    if(lead->minus2==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->minus2==0){
+                        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,10+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->minus2/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->minus2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,10+z);cout<<"\t"<<lead->minus2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 7:while(lead!=NULL){
-                    if(lead->divide2==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->divide2==0){
+                        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->divide2/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->divide2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,21+z);cout<<"\t"<<lead->divide2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 8:while(lead!=NULL){
-                    if(lead->multiply2==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->multiply2==0){
+                        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(25,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->multiply2/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->multiply2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(25,21+z);cout<<"\t"<<lead->multiply2<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 9:while(lead!=NULL){
-                    if(lead->plus3==NULL){
+                    if(lead->plus3==0){
                         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
                         gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(25,10+z);cout<<"\t  ---";
@@ -880,43 +880,43 @@ void MyClass::allDisplay(int x){
                     }z++;lead=lead->next;
                 }break;
         case 10:while(lead!=NULL){
-                    if(lead->minus==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->minus3==0){
+                        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,10+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->minus3/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->minus3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,10+z);cout<<"\t"<<lead->minus3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 11:while(lead!=NULL){
-                    if(lead->divide3==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->divide3==0){
+                        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->divide3/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->divide3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,21+z);cout<<"\t"<<lead->divide3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 12:while(lead!=NULL){
-                    if(lead->multiply3==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->multiply3==0){
+                        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(25,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->multiply3/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->multiply3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(25,21+z);cout<<"\t"<<lead->multiply3<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 13:while(lead!=NULL){
-                    if(lead->plus4==NULL){
+                    if(lead->plus4==0){
                         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
                         gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(25,10+z);cout<<"\t  ---";
@@ -928,10 +928,10 @@ void MyClass::allDisplay(int x){
                     }z++;lead=lead->next;
                 }break;
         case 14:while(lead!=NULL){
-                    if(lead->minus4==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->minus4==0){
+                        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,10+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->minus4/(float)items)*100;
                     gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
@@ -940,31 +940,31 @@ void MyClass::allDisplay(int x){
                     }z++;lead=lead->next;
                 }break;
         case 15:while(lead!=NULL){
-                    if(lead->divide4==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->divide4==0){
+                        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->divide4/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->divide4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,21+z);cout<<"\t"<<lead->divide4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 16:while(lead!=NULL){
-                    if(lead->multiply4==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->multiply4==0){
+                        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(25,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->multiply4/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->multiply4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(25,21+z);cout<<"\t"<<lead->multiply4<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 17:while(lead!=NULL){
-                    if(lead->plus5==NULL){
+                    if(lead->plus5==0){
                         gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
                         gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(25,10+z);cout<<"\t  ---";
@@ -976,39 +976,39 @@ void MyClass::allDisplay(int x){
                     }z++;lead=lead->next;
                 }break;
         case 18:while(lead!=NULL){
-                    if(lead->minus5==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->minus5==0){
+                        gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,10+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->minus5/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->minus5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,10+z);cout<<"\t"<<lead->minus5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 19:while(lead!=NULL){
-                    if(lead->divide5==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->divide5==0){
+                        gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->divide5/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->divide5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(65,21+z);cout<<"\t"<<lead->divide5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 20:while(lead!=NULL){
-                    if(lead->multiply5==NULL){
-                        gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  ---";
+                    if(lead->multiply5==0){
+                        gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(25,21+z);cout<<"\t  ---";
                     }else{
                     float p1 = (lead->multiply5/(float)items)*100;
-                    gotoxy(19,9);cout<<"  PLAYER\t  SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,10+z);cout<<"\t"<<lead->multiply5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
+                    gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                    gotoxy(25,21+z);cout<<"\t"<<lead->multiply5<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 21:while(lead!=NULL){
@@ -1023,42 +1023,42 @@ void MyClass::allDisplay(int x){
                 }break;
         case 22:while(lead!=NULL){
                     if(lead->plus2==0||lead->minus2==0||lead->multiply2==0||lead->divide2==0){
-                        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  DATA UNAVAILABLE";
+                        gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                        gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,10+z);cout<<"\t  DATA UNAVAILABLE";
                     }else{
-                    gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave2<<endl;
+                    gotoxy(59,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                    gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave2<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 23:while(lead!=NULL){
                     if(lead->plus3==0||lead->minus3==0||lead->multiply3==0||lead->divide3==0){
-                        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  DATA UNAVAILABLE";
+                        gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                        gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(25,21+z);cout<<"\t  DATA UNAVAILABLE";
                     }else{
-                    gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave3<<endl;
+                    gotoxy(19,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                    gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave3<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 24:while(lead!=NULL){
                     if(lead->plus4==0||lead->minus4==0||lead->multiply4==0||lead->divide4==0){
-                        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  DATA UNAVAILABLE";
+                        gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                        gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(65,21+z);cout<<"\t  DATA UNAVAILABLE";
                     }else{
-                    gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave4<<endl;
+                    gotoxy(59,20);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                    gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave4<<endl;
                     }z++;lead=lead->next;
                 }break;
         case 25:while(lead!=NULL){
                     if(lead->plus5==0||lead->minus5==0||lead->multiply5==0||lead->divide5==0){
-                        gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                        gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(25,10+z);cout<<"\t  DATA UNAVAILABLE";
+                        gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                        gotoxy(42,33+z);cout<<z+1<<".  "<<lead->name;
+                        gotoxy(52,3+z);cout<<"\t  DATA UNAVAILABLE";
                     }else{
-                    gotoxy(19,9);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
-                    gotoxy(17,10+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave5<<endl;
+                    gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
+                    gotoxy(42,33+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave5<<endl;
                     }z++;lead=lead->next;
                 }break;
     }
@@ -1077,7 +1077,7 @@ void MyClass::AddLead(){
 void MyClass::SubLead(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Subtraction";
+    gotoxy(66,8);cout<<"Subtraction";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,2);
@@ -1088,7 +1088,7 @@ void MyClass::SubLead(){
 void MyClass::DivLead(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Division";
+    gotoxy(66,19);cout<<"Division";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,3);
@@ -1099,7 +1099,7 @@ void MyClass::DivLead(){
 void MyClass::MulLead(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(23,19);cout<<"Multiplication";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,4);
@@ -1121,7 +1121,7 @@ void MyClass::AddLead2(){
 void MyClass::SubLead2(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Subtraction";
+    gotoxy(66,8);cout<<"Subtraction";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,6);
@@ -1132,7 +1132,7 @@ void MyClass::SubLead2(){
 void MyClass::DivLead2(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Division";
+    gotoxy(66,19);cout<<"Division";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,7);
@@ -1143,7 +1143,7 @@ void MyClass::DivLead2(){
 void MyClass::MulLead2(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(23,19);cout<<"Multiplication";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,8);
@@ -1165,7 +1165,7 @@ void MyClass::AddLead3(){
 void MyClass::SubLead3(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Subtraction";
+    gotoxy(66,8);cout<<"Subtraction";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,10);
@@ -1176,7 +1176,7 @@ void MyClass::SubLead3(){
 void MyClass::DivLead3(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Division";
+    gotoxy(66,19);cout<<"Division";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,11);
@@ -1187,7 +1187,7 @@ void MyClass::DivLead3(){
 void MyClass::MulLead3(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(23,19);cout<<"Multiplication";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,12);
@@ -1209,7 +1209,7 @@ void MyClass::AddLead4(){
 void MyClass::SubLead4(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Subtraction";
+    gotoxy(66,8);cout<<"Subtraction";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,14);
@@ -1220,7 +1220,7 @@ void MyClass::SubLead4(){
 void MyClass::DivLead4(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Division";
+    gotoxy(66,19);cout<<"Division";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,15);
@@ -1231,7 +1231,7 @@ void MyClass::DivLead4(){
 void MyClass::MulLead4(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(23,19);cout<<"Multiplication";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,16);
@@ -1253,7 +1253,7 @@ void MyClass::AddLead5(){
 void MyClass::SubLead5(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Subtraction";
+    gotoxy(66,8);cout<<"Subtraction";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,18);
@@ -1264,7 +1264,7 @@ void MyClass::SubLead5(){
 void MyClass::DivLead5(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Division";
+    gotoxy(66,19);cout<<"Division";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,19);
@@ -1275,7 +1275,7 @@ void MyClass::DivLead5(){
 void MyClass::MulLead5(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(23,19);cout<<"Multiplication";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,20);
@@ -1286,7 +1286,7 @@ void MyClass::MulLead5(){
 void MyClass::AllLead(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(26,8);cout<<"Level 1 Overall Rankings";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,21);
@@ -1297,7 +1297,7 @@ void MyClass::AllLead(){
 void MyClass::AllLead2(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(66,8);cout<<"Level 2 Overall Rankings";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,22);
@@ -1308,7 +1308,7 @@ void MyClass::AllLead2(){
 void MyClass::AllLead3(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(23,19);cout<<"Level 3 Overall Rankings";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,23);
@@ -1319,7 +1319,7 @@ void MyClass::AllLead3(){
 void MyClass::AllLead4(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(66,19);cout<<"Level 4 Overall Rankings";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,24);
@@ -1330,7 +1330,7 @@ void MyClass::AllLead4(){
 void MyClass::AllLead5(){
     NODE *temp;
     temp = head;
-    gotoxy(26,8);cout<<"Multiplication";
+    gotoxy(48,31);cout<<"Level 5 Overall Rankings";
     //checking every single player and sort in descending order according to the addition score
     while(temp!=NULL){
         allSort(temp,25);
