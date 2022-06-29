@@ -519,7 +519,7 @@ void MyClass::leaderboard(){
     NODE *p;
     p=head;
     while(p!=NULL){
-        float ave1 = (p->plus1 + p->minus1 + p->divide1 + p->multiply1) / 4.0;
+        p->ave1 = (p->plus1 + p->minus1 + p->divide1 + p->multiply1) / 4.0;
         p->ave2 = (p->plus2 + p->minus2 + p->divide2 + p->multiply2) / 4.0;
         p->ave3 = (p->plus3 + p->minus3 + p->divide3 + p->multiply3) / 4.0;
         p->ave4 = (p->plus4 + p->minus4 + p->divide4 + p->multiply4) / 4.0;
@@ -792,11 +792,11 @@ void MyClass::allDisplay(int x){
                         gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(65,10+z);cout<<"\t  ---";
                     }else{
+                    float p1 = (lead->minus1/(float)items)*100;
                     gotoxy(59,9);cout<<"  PLAYER\t  SCORE(%)";
                     gotoxy(57,10+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(65,10+z);cout<<"\t"<<lead->minus1<<" ("<<fixed<<setprecision(2)<<(float)lead->minus1/items*100<<"%)"<<endl;
-                    }
-                    z++;lead=lead->next;
+                    gotoxy(65,10+z);cout<<"\t"<<lead->minus1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    }z++;lead=lead->next;
                 }break;
         case 3:while(lead!=NULL){
                     if(lead->divide1==0){
@@ -804,11 +804,11 @@ void MyClass::allDisplay(int x){
                         gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(65,21+z);cout<<"\t  ---";
                     }else{
+                    float p1 = (lead->divide1/(float)items)*100;
                     gotoxy(59,20);cout<<"  PLAYER\t  SCORE(%)";
                     gotoxy(57,21+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(65,21+z);cout<<"\t"<<lead->divide1<<" ("<<fixed<<setprecision(2)<<(float)lead->divide1/items*100<<"%)"<<endl;
-                    }
-                    z++;lead=lead->next;
+                    gotoxy(65,21+z);cout<<"\t"<<lead->divide1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    }z++;lead=lead->next;
                 }break;
         case 4:while(lead!=NULL){
                     if(lead->multiply1==0){
@@ -816,11 +816,11 @@ void MyClass::allDisplay(int x){
                         gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
                         gotoxy(25,21+z);cout<<"\t  ---";
                     }else{
+                    float p1 = (lead->multiply1/(float)items)*100;
                     gotoxy(19,20);cout<<"  PLAYER\t  SCORE(%)";
                     gotoxy(17,21+z);cout<<z+1<<".  "<<lead->name;
-                    gotoxy(25,21+z);cout<<"\t"<<lead->multiply1<<" ("<<fixed<<setprecision(2)<<(float)lead->multiply1/items*100<<"%)"<<endl;
-                    }
-                    z++;lead=lead->next;
+                    gotoxy(25,21+z);cout<<"\t"<<lead->multiply1<<" ("<<fixed<<setprecision(2)<<p1<<"%)"<<endl;
+                    }z++;lead=lead->next;
                 }break;
         case 5:while(lead!=NULL){
                     if(lead->plus2==0){
