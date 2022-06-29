@@ -102,18 +102,21 @@ void MyClass::logIn(){
         q=p;
         p=p->next;
     }if(p==NULL){
-        system("cls"); box();
+        system("cls");
+        box();
         gotoxy(45,6);cout<<"A NEW CHALLENGER!"<<endl;
         gotoxy(45,7);cout<<"Enter Password: ";getline(cin,player.pass);
         AddPlayer(player);
         marker=player.name;
     }else{
-        here: system("cls");
-        cout<<"Welcome back "<<player.name<<"!"<<endl;
-        cout<<"Enter Password: ";getline(cin,player.pass);
+        here:
+        system("cls");
+        box();
+        gotoxy(45,6);cout<<"Welcome back "<<player.name<<"!"<<endl;
+        gotoxy(45,7);cout<<"Enter Password: ";getline(cin,player.pass);
         if(player.pass!=p->pass){
             gotoxy(45,9);cout<<"Incorrect Password";
-            system("pause");
+            gotoxy(45,11);system("pause");
             goto here;
         }else{
             gotoxy(45,9);cout<<"Log in was successful!";
@@ -652,7 +655,7 @@ void MyClass::allSort(NODE *t,int x){
                     lead = newNode;
                 }else{
                     q->next = newNode;
-                }newNode->next=p;
+                }newNode->next=p;break;
         case 12: while (p!=NULL && t->multiply3 < p->multiply3){
                     q = p;
                     p = p->next;
@@ -1055,7 +1058,7 @@ void MyClass::allDisplay(int x){
                     if(lead->plus5==0||lead->minus5==0||lead->multiply5==0||lead->divide5==0){
                         gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
                         gotoxy(42,33+z);cout<<z+1<<".  "<<lead->name;
-                        gotoxy(52,3+z);cout<<"\t  DATA UNAVAILABLE";
+                        gotoxy(52,33+z);cout<<"\t  DATA UNAVAILABLE";
                     }else{
                     gotoxy(44,32);cout<<"  PLAYER\t  AVERAGE SCORE(%)";
                     gotoxy(42,33+z);cout<<z+1<<".  "<<lead->name<<"\t      "<<fixed<<setprecision(2)<<lead->ave5<<endl;
