@@ -315,7 +315,7 @@ void MyClass::division(){
             temp = y*z; //to have divisible numbers
             y = temp;
             gotoxy(40,5);cout<<"  "<<y;
-            gotoxy(40,6);cout<<s<<" "<<z;
+            gotoxy(40,6);cout<<(char)s<<" "<<z;
             gotoxy(41,8);cin>>answer;
             if(answer == y/z){
                 gotoxy(33,12);cout<<"Correct!";
